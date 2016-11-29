@@ -36,9 +36,11 @@ model{
     sd.mu.st.gamma[j]<-1/(sqrt(mu.tau.gamma[j]))
     mu.tau.phi[j]~dgamma(3,2)
     sd.mu.st.phi[j]<-1/(sqrt(mu.tau.phi[j]))
+    mu.global.gamma[j]~dnorm(0,0.33)
+    mu.global.phi[j]~dnorm(0,0.33)
     for(k in 1:M){
-      mu.sp.st.gamma[j,k]~dnorm(0,mu.tau.gamma[j])
-      mu.sp.st.phi[j,k]~dnorm(0,mu.tau.phi[j])
+      mu.sp.st.gamma[j,k]~dnorm(mu.global.gamma[j],mu.tau.gamma[j])
+      mu.sp.st.phi[j,k]~dnorm(mu.global.phi[j],mu.tau.phi[j])
       tau.sp.st.gamma[j,k]~dgamma(3,2)
       sd.sp.st.gamma[j,k]<-1/(sqrt(tau.sp.st.gamma[j,k]))
       tau.sp.st.phi[j,k]~dgamma(3,2)
