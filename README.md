@@ -19,4 +19,4 @@ gallo_et_al_2017_species_names.txt - A vector of the observed species used in ou
 
 gallo_et_al_2017_urban_cov.txt - The urbanization covariate for each site, in the same order as all of the other data.
 
-**Note:** All of the files in DataS1 must be within your working directory for the analysis to work.  Our analysis was done in parallel and used all but two of the cores in a computer. Therefore, if you have two or less cores on your computer you will need to adjust the MCMC settings annotated within gallo_et_al_2017_site_type_analysis.R.
+**Note:** All of these files must be within your working directory for the analysis to work.  Our analysis was done in parallel and used all but two of the cores in a computer. Therefore, if you have two or less cores on your computer you will need to adjust the MCMC settings annotated within gallo_et_al_2017_site_type_analysis.R.
