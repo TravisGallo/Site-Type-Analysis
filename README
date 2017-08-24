@@ -1,18 +1,8 @@
-R script, JAGS model, and data used to estimate 𝛾-, 𝛼-, and 𝛽-diversity and community and population dynamics in urban green spaces in the Chicago metropolitan area, IL USA.
+#R script, JAGS model, and data used to estimate 𝛾-, 𝛼-, and 𝛽-diversity and community and population dynamics in urban green spaces in the Chicago metropolitan area, IL USA.
 
-Gallo, T., M. Fidino, E.W. Lehrer, S. Magle.  Mammal diversity and metacommunity dynamics in urban green spaces: implications for urban wildlife conservation. Ecological Applications
+##**Gallo, T., M. Fidino, E.W. Lehrer, S. Magle. Mammal diversity and metacommunity dynamics in urban green spaces: implications for urban wildlife conservation. *Ecological Applications***
 
-*File list (files found within DataS1.zip)*
-gallo_et_al_2017_site_type_analysis.R
-gallo_et_al_2017_site_type_model.R
-gallo_et_al_2017_y_array.RDS
-gallo_et_al_2017_z_array.RDS
-gallo_et_al_2017_j_matrix.RDS
-gallo_et_al_2017_site_type.txt
-gallo_et_al_2017_species_names.txt
-gallo_et_al_2017_urban_cov.txt
-
-*File descriptions*
+#**File descriptions:**
 gallo_et_al_2017_site_type_analysis.R – the only file that you need to open. Loads datasets and formats data for JAGS model. Has code for summarizing the posterior distributions and calculating derived alpha, beta, and gamma diversity.
 
 gallo_et_al_2017_site_type_model.R - JAGS model used to estimate metacommunity and metapopulation dynamics and derive diversity metrics. Read in gallo_et_al_2017_site_type_analysis.R.  
