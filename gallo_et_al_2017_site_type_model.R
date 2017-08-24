@@ -1,9 +1,10 @@
 model{
   
   # Priors
+  # Probability that m species are in metacommunity
   omega~dunif(0,1)
   
-  #Priors for species by site effects in occupancy and detection
+  # Priors for species by site effects in occupancy and detection
   # Intercepts can vary by season
   for(k in 1:M){
     for(t in 1:nseason){
@@ -11,27 +12,30 @@ model{
       spe.phi[k,t]~dnorm(0,spe.phi.tau[t])
     }
   }
-  # Hyper params that describe community
   
+  # Hyper parameters that describe community
   for(k in 1:M){
-    lpsi[k]~dnorm(0,tau.lpsi)
-    theta.phi[k]~dnorm(0,tau.theta.phi)
-    theta.gamma[k]~dnorm(0,tau.theta.gamma)
+    lpsi[k]~dnorm(0,tau.lpsi) # logit occupancy
+    theta.phi[k]~dnorm(0,tau.theta.phi) # urbanization covariate effect on persistence
+    theta.gamma[k]~dnorm(0,tau.theta.gamma) # urbanization covariate effect on colonization
+    # species specific colonization and persistence to site of particular green space type
     for(i in 1:nsite){
       sp.st.gamma[i,k]~dnorm(mu.sp.st.gamma[st[i],k],tau.sp.st.gamma[st[i],k])
       sp.st.phi[i,k]~dnorm(mu.sp.st.phi[st[i],k],tau.sp.st.phi[st[i],k])
     }
   # For Detection
-    alpha[k]~dnorm(0,tau.alpha)
+    alpha[k]~dnorm(0,tau.alpha) # intercept
+    # season specific difference in detection
     season[k,1]<-0
     for(t in 2:4){
       season[k,t]~dnorm(0,tau.season[t-1])
     }
   }
   
-  # HyperPriors for global response
-  # For Occupancy
-  for(j in 1:4){
+  # Hyper parameters for global response
+  # For colonization and persistence
+  for(j in 1:4){ # we have 4 site types
+    # community response to site type
     mu.tau.gamma[j]~dgamma(3,2)
     sd.mu.st.gamma[j]<-1/(sqrt(mu.tau.gamma[j]))
     mu.tau.phi[j]~dgamma(3,2)
@@ -39,6 +43,7 @@ model{
     mu.global.gamma[j]~dnorm(0,0.33)
     mu.global.phi[j]~dnorm(0,0.33)
     for(k in 1:M){
+      # species response to site type informed by community response
       mu.sp.st.gamma[j,k]~dnorm(mu.global.gamma[j],mu.tau.gamma[j])
       mu.sp.st.phi[j,k]~dnorm(mu.global.phi[j],mu.tau.phi[j])
       tau.sp.st.gamma[j,k]~dgamma(3,2)
@@ -47,6 +52,7 @@ model{
       sd.sp.st.phi[j,k]<-1/(sqrt(tau.sp.st.phi[j,k]))
     }
   }
+  # variance terms for hyper parameters
   tau.lpsi~dgamma(3,2)
   sd.lpsi<-1/(sqrt(tau.lpsi))
   tau.theta.gamma~dgamma(3,2)
@@ -54,7 +60,7 @@ model{
   tau.theta.phi~dgamma(3,2)
   sd.theta.phi<-1/(sqrt(tau.theta.phi))
   
-  # For intercept variance
+  # Seasonal variance in colonization and persistence
   for(t in 1:nseason){
     spe.gam.sd[t]<-1/(sqrt(spe.gam.tau[t]))
     spe.gam.tau[t]~dgamma(3,2)
@@ -62,7 +68,7 @@ model{
     spe.phi.tau[t]~dgamma(3,2)
   }
   
-  # For Detection
+  # Variance prior for detection probability
   tau.alpha~dgamma(3,2)
   sd.alpha<-1/(sqrt(tau.alpha))
   for(i in 1:3){
